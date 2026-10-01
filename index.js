@@ -37,6 +37,19 @@ con.connect((err) => {
     console.log('Connected to MySQL database');
 });
 
+// show all articles - index page
+app.get('/', (req, res) => {
+    let query = "SELECT * FROM article";
+    let articles = [];
+    con.query(query, (err, result) => {
+        if (err) throw err;
+        articles = result;
+        res.render('index', { 
+            articles: articles 
+        });
+    })
+});
+
 app.listen(port, () => {
     console.log(`Cat is running on http://localhost:${port}`);
 });
