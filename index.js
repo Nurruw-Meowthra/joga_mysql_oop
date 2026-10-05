@@ -37,17 +37,18 @@ con.connect((err) => {
     console.log('Connected to MySQL database');
 });
 
-// show all articles - index page
-app.get('/', (req, res) => {
-    let query = "SELECT * FROM article";
-    let articles = [];
+// show all article by this slug
+app.get('/article/:slug', (req, res) => {
+    let query = `SELECT * FROM articles WHERE slug = '${req.params.slug}'`;
+    let articles
     con.query(query, (err, result) => {
         if (err) throw err;
         articles = result;
-        res.render('index', { 
-            articles: articles 
+        console.log(article);
+        res.render('article', { 
+            article: article 
         });
-    })
+    });
 });
 
 app.listen(port, () => {
